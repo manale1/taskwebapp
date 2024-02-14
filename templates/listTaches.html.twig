@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block titleTwig %}Task lists{% endblock %}
+{% block body %}
+    <div class="container mt-5">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Designation</th>
+                <th scope="col">Date de début</th>
+                <th scope="col">Date de fin</th>
+                <th scope="col">Name employee</th>
+                <th scope="col">Name client</th>
+                <th scope="col">Name outil</th>
+                <th scope="col">Status</th>
+                <th scope="col">Management</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for tache in listtaches %}
+                <tr>
+                    <td>
+                        {{ tache.designation }}
+                    </td>
+                    <td>{{ tache.dateDebut|date('Y-m-d') }}</td>
+                    {% if tache.idStatut.id == 3 or tache.idStatut.id == 4 %}
+                    <td> {{ tache.dateFin |date('Y-m-d') }}</td>
+                    {% else %}
+                        <td> Task not be realized </td>
+                    {% endif %}
+                    <td>{{ tache.idEmploye.nom~" "~tache.idEmploye.prenom }}</td>
+                    <td>{{ tache.idClient.nom~" "~tache.idClient.prenom }}</td>
+                    <td>{{ tache.idOutil.nom }}</td>
+                    <td>{{ tache.idStatut.libelle }}</td>
+                    <td>
+                        {% if tache.idStatut.id == 4 %}
+                            <button type="reset" class="btn"><a href="{{ path('app_deletetache',{'id': tache.id} )}}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')">Supprimer</a></button>
+                        {% else %}
+                        <button type="submit"  class="btn "><a href="{{ path('app_updatetache',{'id': tache.id} )}}">Modifier</a></button>
+                        <button type="reset" class="btn "><a href="{{ path('app_deletetache',{'id': tache.id} )}}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')">Supprimer</a></button>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+ {% block titleTwig %}Add Project {% endblock %}
+{% block body %}
+        <div class="container" style="width: 800px">
+                {{ form_start(formProject) }}
+                {{ form_widget(formProject) }}
+                <button type="submit">Cree</button>
+                {{ form_end(formProject) }}
+        </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

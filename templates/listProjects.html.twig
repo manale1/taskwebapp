@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Date de début</th>
+                <th scope="col">Date de fin</th>
+                <th scope="col">Organized</th>
+                <th scope="col">State</th>
+                <th scope="col">Infos Project</th>
+                <th scope="col">Nmr max</th>
+                <th scope="col">Registration</th>
+                {% if app.user.administrateur %}
+                <th scope="col">Management</th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for project in projects %}
+                <tr>
+                    <td>
+                        {{ project.nom }}
+                    </td>
+                    <td>{{ project.datedebut|date('Y-m-d') }}</td>
+                    <td> {{ project.datefin |date('Y-m-d') }}</td>
+                    <td>{{ project.organisateur.nom~" "~project.organisateur.prenom }}</td>
+                    {% if project.datefin |date('Y-m-d') < "now"|date("Y-m-d") %}
+                    <td>Closed</td>
+                    {% else %}
+                    <td>{{ project.etat.libelle }}</td>
+                    {% endif %}
+                    <td ><textarea style="width:250px" cols="5" rows="10">{{ project.infosProject }}</textarea></td>
+                    <td>{{ project.nbInscription }}</td>
+                    {% if project.etat.id != 1 or project.datefin |date('Y-m-d') < "now"|date("Y-m-d")%}
+                        <td>Closed</td>
+                    {% else %}
+                        <td><a href="{{ path('app_inscription',{id: project.id }) }}">Register</a></td>
+                     {% endif%}
+
+                        {% if app.user.administrateur %}
+                    <td style="width: 70px">
+                        {% if project.etat.id != 1 %}
+                            <button type="reset" class="btn "><a href="{{ path('app_deleteproject',{'id': project.id} )}}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')">Supprimer</a></button>
+                       {% else %}
+                           <button type="submit"  class="btn "><a href="{{ path('app_updateproject',{'id': project.id} )}}">Modifier</a></button>
+                           <button type="reset" class="btn "><a href="{{ path('app_deleteproject',{'id': project.id} )}}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')">Supprimer</a></button>
+                        {% endif %}
+                    </td>
+                        {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

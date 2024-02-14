@@ -1,0 +1,75 @@
+<nav class="navbar navbar-expand-lg navbar-light " style="width: 100%; background-color: lavender">
+    <div class="container-fluid">
+        <!-- Logo -->
+        <a class="navbar-brand" href="#">
+            <img src="{{ asset('images/SSSlogo.png') }}" alt="Logo" width="auto" height="60">
+        </a>
+        <!-- Burger menu button -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- Collapsible content -->
+        <div class="collapse navbar-collapse" id="navbarText" >
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-left: 35px">
+                <li class="nav-item">
+                    <a  style="font-size:17px ; margin-left:30px;" class="nav-link active" aria-current="page" href="{{ path('app_m') }}">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a style="font-size:17px ; margin-left:30px;color: black;" class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Tasks Managements
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                        <li><a  style="font-size:18px ;"class="dropdown-item" href="{{ path('app_listtasks') }}">Tasks lists</a></li>
+                    </ul>
+                </li>
+                {% if app.user.administrateur %}
+                    <li class="nav-item dropdown">
+                        <a style="font-size:17px ; margin-left:30px;color: black;" class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Employees Managements
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                            <li><a  style="font-size:18px ;" class="dropdown-item" href="{{ path('app_register') }}">Add Employee</a></li>
+                            <li><a  style="font-size:18px ; " class="dropdown-item" href="{{ path('app_listusers') }}">Employees Lists</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a style="font-size:17px ; margin-left:30px;color: black;" class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Clients Managements
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                            <li><a  style="font-size:18px ;" class="dropdown-item" href="{{ path('app_addclient') }}">Add Client</a></li>
+                            <li><a  style="font-size:18px ;" class="dropdown-item" href="{{ path('app_listclients') }}">Clients Lists</a></li>
+                        </ul>
+                    </li>
+                <li class="nav-item dropdown">
+                    <a style="font-size:17px ; margin-left:30px;color: black;" class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Tools Managements
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                        <li><a  style="font-size:18px ;" class="dropdown-item" href="{{ path('app_addoutil') }}">Add Tool</a></li>
+                        <li><a  style="font-size:18px ; " class="dropdown-item" href="{{ path('app_listoutils') }}">Tools Lists</a></li>
+                    </ul>
+                </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a  style="font-size:17px ; margin-left:30px;" class="nav-link active" aria-current="page" href="#"> {{ app.user.nom }}</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a style="font-size:17px ; margin-left:30px;color: black;" class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Parameters
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                        <li><a  style="font-size:18px ;" class="dropdown-item" href="{{ path('app_profil') }}">Profile</a></li>
+                        <li><a  style="font-size:18px ; " class="dropdown-item" href="{{ path('app_addproject') }}">Add project</a></li>
+                        <li><a  style="font-size:18px ; " class="dropdown-item" href="{{ path('app_listprojects') }}">Lists projects</a></li>
+                        <li><a  style="font-size:18px ; " class="dropdown-item" href="{{ path('app_logout') }}">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+
+
+
+        </div>
+    </div>
+</nav>

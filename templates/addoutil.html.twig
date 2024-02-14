@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container" style="width:800px">
+        {{ form_start(formoutil) }}
+        {{ form_widget(formoutil) }}
+        <button  type="submit" class="btn btn-primary" >Register</button>
+        {{ form_end(formoutil) }}
+    </div>
+
+{% endblock %}
+
+{% block title %}
+addoutil
+{% endblock %}
+

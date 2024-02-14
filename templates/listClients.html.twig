@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Prenom</th>
+                <th scope="col">tele</th>
+                <th scope="col">email</th>
+                <th scope="col">adresse</th>
+                <th scope="col">Gestion client</th>
+            </tr>
+            </thead>
+            {% for client in clients %}
+            <tbody>
+            <tr>
+                <td>{{ client.nom }}</td>
+                <td>{{ client.prenom }}</td>
+                <td>{{ client.telephone }}</td>
+                <td>{{ client.email }}</td>
+                <td>{{ client.adresse }}</td>
+                <td>
+                    <button type="submit"  class="btn"><a href="{{ path('app_updateclient',{'id': client.id} )}}">Modifier</a></button>
+                    <button type="reset"  class="btn"><a href="{{ path('app_deleteclient',{'id': client.id} )}}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')">Supprimer</a></button>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+
+
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+list clients
+{% endblock %}
+

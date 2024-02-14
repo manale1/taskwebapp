@@ -1,0 +1,60 @@
+
+.login
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: left;
+    background-color: lavender;
+    margin-left: 500px;
+    margin-right: 500px;
+    border-radius: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    margin-top:200px;
+}
+
+.login #inputMailOrPseudo,#inputPassword
+{
+    padding-left: 80px;
+    padding-right: 80px;
+    border-radius: 10px;
+}
+.login a
+{
+    color: #5eb5e0;
+    font-size: 20px;
+}
+.login button
+{
+    margin-bottom: 20px;
+    border-radius: 40px;
+    border: 10px white;
+}
+.profileDiv  input,
+textarea{
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+    width: 500px;
+    height: 30px;
+    border-radius: 5px;
+    max-width: 50%;
+    border-color: darkkhaki;
+}
+.profileDiv
+{
+    text-align: center;
+    background-color: lavender;
+    border: 10px  white;
+    margin-left: 350px;
+    margin-right: 350px;
+    border-radius: 20px;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.logo
+{
+    max-width: 70px;
+}
+

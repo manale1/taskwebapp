@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container" style="width: 800px;">
+        {{ form_start(formEmploye) }}
+        {{ form_widget(formEmploye) }}
+        <button type="submit" style="margin-top: 15px" class="btn btn-primary btn-lg" >Enregistrer</button>
+        <button type="reset" style="margin-top: 15px" class="btn btn-primary btn-lg" ><a class="btn btn-primary " href="{{ path('app_m') }}">Annuler</a></button>
+        {{ form_end(formEmploye) }}
+    </div>
+
+
+{% endblock %}
+
+{% block title %}
+Uppdate user
+{% endblock %}
+

@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="profileDiv" >
+        <div class="container">
+            <div class="row g-2">
+                <div class="col-6">
+                    <p>Prénom :</p>
+                </div>
+                <div class="col-6">
+                    <p>{{ app.user.prenom}}</p>
+                </div>
+                <div class="col-6">
+                    <p>Nom :</p>
+                </div>
+                <div class="col-6">
+                    <p>{{ app.user.nom }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row g-2">
+                <div class="col-6">
+                    <p>Téléphone :</p>
+                </div>
+                <div class="col-6">
+                    <p>{{ app.user.telephone }}</p>
+                </div>
+                <div class="col-6">
+                    <p>Date de naiss</p>
+                </div>
+                <div class="col-6">
+                    <p>{{ app.user.dateNaiss |date('Y/m/d') }}</p>
+                </div>
+                <div class="col-6">
+                    <p>Mail :</p>
+                </div>
+                <div class="col-6">
+                    <p>{{ app.user.email }}</p>
+                </div>
+                <div class="row g-2">
+                    <div class="col-6">
+                        <p>Adresse</p>
+                    </div>
+                    <div class="col-6">
+                        <p>{{ app.user.adresse }}</p>
+                    </div>
+                </div>
+                <div class="row g-2">
+                    <div class="col-6">
+                        <p>Poste</p>
+                    </div>
+                    <div class="col-6">
+                        <p>{{ app.user.poste }}</p>
+                    </div>
+                </div>
+            </div>
+            {% if app.user.administrateur %}
+            <button type="submit" style="margin-top: 15px" class="btn btn-primary btn-lg" ><a class="btn btn-primary " href="{{ path('app_updateuser',{'id' : app.user.id}) }}">Modifier</a></button>
+            {% endif %}
+            <button type="reset" style="margin-top: 15px" class="btn btn-primary btn-lg" ><a class="btn btn-primary " href="{{ path('app_m') }}">Retour</a></button>
+    </div>
+{% endblock %}
+
+{% block title %}
+    Profil
+{% endblock %}

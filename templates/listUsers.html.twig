@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Nom</th>
+                <th scope="col">Prenom</th>
+                <th scope="col">datenaiss</th>
+                <th scope="col">tele</th>
+                <th scope="col">email</th>
+                <th scope="col">adresse</th>
+                <th scope="col">poste</th>
+                <th scope="col">administrateur</th>
+                <th scope="col">Gestion</th>
+            </tr>
+            </thead>
+            {% for user in users %}
+            <tbody>
+            <tr>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.dateNaiss | date('Y/m/d') }}</td>
+                <td>{{ user.telephone }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.adresse }}</td>
+                <td>{{ user.poste }}</td>
+                <td>{{ user.administrateur }}</td>
+                <td>
+                    <button type="submit"  class="btn"><a href="{{ path('app_updateuser',{'id': user.id} )}}">Modifier</a></button>
+                    <button type="reset"  class="btn"><a href="{{ path('app_deleteuser',{'id': user.id} )}}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')">Supprimer</a></button>
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+
+
+        </table>
+    </div>
+{% endblock %}
+
+{% block title %}
+List users
+{% endblock %}
+
