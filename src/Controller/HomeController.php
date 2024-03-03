@@ -13,7 +13,7 @@ class HomeController extends \Symfony\Bundle\FrameworkBundle\Controller\Abstract
      */
     public function home(): Response
     {
-        return $this->render('base.html.twig');
+        return $this->render('home.html.twig');
     }
 
 }

@@ -1,10 +1,12 @@
 {% extends 'base.html.twig' %}
-
+ {% block titleTwig %}Update Task{% endblock %}
 {% block body %}
-    <div class="container">
+    <div class="contentTwig container" style="width: 800px">
         {{ form_start(formtache) }}
         {{ form_widget(formtache) }}
-        <button type="submit" style="margin-top: 15px" class="btn btn-primary">Modifier</button>
+        <h4>Tool</h4>
+        {{ (formOutil)|raw }}
+        <button type="submit" style="margin-top: 15px" class="button" >Register</button>
         {{ form_end(formtache) }}
     </div>
 {% endblock %}

@@ -15,10 +15,12 @@ class OutilFormType extends AbstractType
     {
         $builder
             ->add('nom',TextType::class,[
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Name'
             ])
-            ->add('parametres',TextareaType::class,[
-                'attr' => ['class' => 'form-control']
+            ->add('parametres', TextareaType::class, [
+                'attr' => ['class' => 'form-control '],
+                'label' => 'Parameters'
             ])
         ;
     }

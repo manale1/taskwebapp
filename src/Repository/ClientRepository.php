@@ -39,6 +39,17 @@ class ClientRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Client|null
+     */
+    public function findByEmail($email): ?Client
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.email = :email')
+            ->setParameter('email', $email)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 //    /**
 //     * @return Client[] Returns an array of Client objects
 //     */

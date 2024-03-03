@@ -30,6 +30,7 @@ class EmployeController extends AbstractController
 
             if($formEmploye->isSubmitted() && $formEmploye->isValid())
             {
+                $this->addFlash('success', 'This employee is successfully updated');
                 //la comme vous voyez ,on fait le hachage de plainMotPasse la confirmation de motPasse
                 //remarque :le changement de nom ne change rien dans la BDD ,il reste toujours motPasse dans la BDD
                 //et on va bien avoir le motPasse haché dans notre BDD
@@ -38,7 +39,7 @@ class EmployeController extends AbstractController
 
                 $entityManager->persist($infoEmploye);
                 $entityManager->flush();
-                return  $this->redirectToRoute('app_m');
+                return  $this->redirectToRoute('app_listusers');
             }
         return $this->render('modifUser.html.twig',
         ['formEmploye' => $formEmploye->createView(),
@@ -51,6 +52,14 @@ class EmployeController extends AbstractController
     public function afficherProfil() : Response
     {
         return $this->render('profil.html.twig');
+    }
+    /**
+     * @Route ("/profilorg/{id}",name ="app_profilorg")
+     */
+    public function afficherProfilOrganis(int $id,EmployeRepository $employeRepository) : Response
+    {
+        $user = $employeRepository->find($id);
+        return $this->render('profilOrg.html.twig',['userorg' =>$user]);
     }
     /**
      * @Route ("/listusers",name ="app_listusers")
@@ -68,8 +77,20 @@ class EmployeController extends AbstractController
     public function deletUser(int $id,EmployeRepository $employeRepository) :Response
     {
         $user = $employeRepository->find($id);
+        $this->addFlash('success', 'This employee is successfully deleted');
         $employeRepository->remove($user,true);
         return $this->redirectToRoute('app_listusers');
+    }
+    /**
+     * @Route ("/finbyemail",name ="app_finbyemail")
+     */
+    public function finByEmail(Request $request,EmployeRepository $employeRepository) :Response
+    {
+        $email = $request->request->get('email');
+
+        $employee = $employeRepository->findByEmail($email);
+
+        return $this->render('listUsers.html.twig',['employee' => $employee]);
     }
 
 }

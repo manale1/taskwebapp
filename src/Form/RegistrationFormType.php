@@ -23,27 +23,36 @@ class RegistrationFormType extends AbstractType
     {
         $builder
             ->add('nom',TextType::class,[
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Name'
             ])
             ->add('prenom',TextType::class ,[
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'label' => 'First name'
             ])
             ->add('email',EmailType::class,[
-                'attr' => ['class' => 'form-control']]
+                'attr' => ['class' => 'form-control'],
+                    'label' => 'Email'
+                ]
             )
             ->add('dateNaiss',DateType::class,[
                 'attr' => ['class' => 'form-control','type' => 'date'],
                 'years' => range(date('Y') -70, date('Y')),
+                'label' => 'Date of birth'
             ])
             ->add('telephone',TelType::class,[
-                'attr' => ['class' => 'form-control']]
+                'attr' => ['class' => 'form-control'],
+                    'label' => 'Number phone'
+                    ]
 
             )
             ->add('adresse',TextType::class,[
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Address'
             ])
             ->add('poste',TextType::class,[
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Job'
             ])
             ->add('plainPassword', RepeatedType::class, [
                 'type' => PasswordType::class,
@@ -59,6 +68,7 @@ class RegistrationFormType extends AbstractType
                 ])
             ->add('administrateur',CheckboxType::class,[
                 'attr' => ['class' => 'form-check-label'],
+                'label' => 'Administrator',
                 'required' => false
             ])
         ;

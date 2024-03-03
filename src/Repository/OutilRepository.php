@@ -38,6 +38,20 @@ class OutilRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    /**
+     * @return Outil|null
+     */
+    public function findByName($name): ?Outil
+    {
+        return $this->createQueryBuilder('o')
+            ->andWhere('o.nom LIKE :name')
+            ->setParameter('name','%'.$name.'%')
+            ->getQuery()
+            ->getOneOrNullResult();
+
+    }
+
     public function JsonToFormHtml($json)
     {
         $Json = json_decode($json, true);

@@ -56,7 +56,19 @@ class EmployeRepository extends ServiceEntityRepository implements PasswordUpgra
         $this->add($user, true);
     }
 
-//    /**
+    /**
+     * @return Employe|null
+     */
+    public function findByEmail($email): ?Employe
+    {
+        return $this->createQueryBuilder('e')
+            ->andWhere('e.email = :email')
+            ->setParameter('email', $email)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+//    /*/**
 //     * @return Employe[] Returns an array of Employe objects
 //     */
 //    public function findByExampleField($value): array
@@ -69,7 +81,7 @@ class EmployeRepository extends ServiceEntityRepository implements PasswordUpgra
 //            ->getQuery()
 //            ->getResult()
 //        ;
-//    }
+//    }*/
 
 //    public function findOneBySomeField($value): ?Employe
 //    {

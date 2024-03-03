@@ -33,9 +33,10 @@ class RegistrationController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
+            $this->addFlash('success', 'This employee is successfully added');
             $entityManager->persist($user);
             $entityManager->flush();
+            return $this->redirectToRoute('app_listusers');
         }
 
         return $this->render('registration/register.html.twig', [

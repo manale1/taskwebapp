@@ -3,9 +3,9 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
-<div class="container" style="width: 800px;margin-top: 200px">
+<div class="login"  >
 
-    <form method="post">
+    <form method="post" id="formConx">
         {% if app.request.query.get('_target_path') %}
             <input type="hidden" name="_target_path" value="{{ app.request.query.get('_target_path') }}" />
         {% endif %}
@@ -20,13 +20,21 @@
         {% endif %}
 
         <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="inputEmail">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-        <label for="inputPassword">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
+        <div class="field">
+            <label class="label" for="email">Email</label>
+            <div class="control ">
+                <input class="form-control" type="email" value="{{ last_username }}" name="email" id="inputEmail"  autocomplete="email" required autofocus>
+            </div>
+        </div>
+        <div class="field ">
+            <label class="label" for="mdp">Password</label>
+            <div class="control ">
+                <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
+            </div>
+        </div>
 
         {#
         Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
@@ -38,13 +46,23 @@
             </label>
         </div>
         #}
+        <div class="field">
+            <button type="submit" id="login" class="button mt-5 has-text-centered has-background-success" name="boutton-valider" >Sign in</button>
+        </div>
+        <div class="field mt-5">
+            <div class="control">
+                <div class="columns">
+                    <div class="column">
+                        <p ><a style="color: red" href="{{ path('app_forgot_password_request') }}">Forgot password</a></p>
+                    </div>
+                    <div class="column">
 
-        <button class="btn btn-lg btn-primary" type="submit" style="margin-top: 15px">
-            Sign in
-        </button>
-        <button class="btn btn-lg btn-primary" type="reset" style="margin-top: 15px">
-            <a href="{{ path('app_forgot_password_request') }}" style="color: #FFFFFF;text-decoration: none">Reset password</a>
-        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </form>
 </div>
 {% endblock %}

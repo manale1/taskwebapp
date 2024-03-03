@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
-
+ {% block titleTwig %}Add Tool{% endblock %}
 {% block body %}
     <div class="container" style="width:800px">
+        <button class="button" style="margin-bottom: 20px"><a href="{{ path('app_iframe') }}">Download a tool via google</a></button>
         {{ form_start(formoutil) }}
         {{ form_widget(formoutil) }}
-        <button  type="submit" class="btn btn-primary" >Register</button>
+        <button  type="submit" class="button" >Register</button>
         {{ form_end(formoutil) }}
     </div>
 

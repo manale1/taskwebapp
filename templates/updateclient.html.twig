@@ -1,10 +1,13 @@
 {% extends 'base.html.twig' %}
-
+{% block titleTwig %}Update Client{% endblock %}
 {% block body %}
-    {{ form_start(formclient) }}
-    {{ form_widget(formclient) }}
-    <button class="btn btn-lg btn-primary" type="submit">Register</button>
-    {{ form_end(formclient) }}
+    <div class="container" style="width: 800px;">
+        {{ form_start(formclient) }}
+        {{ form_widget(formclient) }}
+        <button class="button" type="submit">Register</button>
+        {{ form_end(formclient) }}
+    </div>
+
 {% endblock %}
 
 {% block title %}

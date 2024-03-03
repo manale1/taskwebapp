@@ -38,6 +38,72 @@ class TacheRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    /**
+     * @return Tache[]
+     */
+    public function findByDate($datedebut,$datefin): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.date_debut <= :dated')
+            ->andWhere('t.date_fin >= :datef')
+            ->setParameter('dated', $datedebut)
+            ->setParameter('datef', $datefin)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    /**
+     * @return Tache[]
+     */
+    public function findByDesignation($designation): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.designation LIKE :design')
+            ->setParameter('design','%'.$designation.'%')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    /**
+     * @return Tache[]
+     */
+    public function taskRealized(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.id_statut = :idstatut')
+            ->setParameter('idstatut',2)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    /**
+     * @return Tache[]
+     */
+    public function taskToBeRealized(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.id_statut = :idstatut')
+            ->setParameter('idstatut',1)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+    /**
+     * @return Tache[]
+     */
+    public function taskClosed(): array
+    {
+        return $this->createQueryBuilder('t')
+            ->andWhere('t.id_statut = :idstatut OR t.id_statut = :idst')
+            ->setParameter('idstatut',3)
+            ->setParameter('idst',4)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
+
 
 //    /**
 //     * @return Tache[] Returns an array of Tache objects

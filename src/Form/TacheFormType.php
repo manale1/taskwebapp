@@ -20,12 +20,17 @@ class TacheFormType extends AbstractType
     {
         $builder
             ->add('designation',TextType::class,[
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Designation'
             ])
             ->add('date_debut',DateType::class,['data' => new \DateTime(),
-                'attr' => ['class' => 'form-control']])
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Start date'
+            ])
+
             ->add('id_client',EntityType::class,[
                 'attr' => ['class' => 'form-control'],
+                'label' => 'Name  of client',
                 'class' => 'App\Entity\Client',
                 'choice_label' => function($client)
                 {
@@ -35,6 +40,7 @@ class TacheFormType extends AbstractType
             ->add('id_employe',EntityType::class,[
                 'attr' => ['class' => 'form-control'],
                 'class' => 'App\Entity\Employe',
+                'label' => 'Name of employee',
                 'choice_label' => function($employe)
                 {
                     return $employe->getNom().' '. $employe->getPrenom();

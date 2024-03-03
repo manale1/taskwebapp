@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
-
+ {% block titleTwig %}Update Tool{% endblock %}
 {% block body %}
     {{ form_start(formoutil) }}
     {{ form_widget(formoutil) }}
-    <button type="submit" class="btn">Register</button>
+    <button type="submit" class="button">Register</button>
     {{ form_end(formoutil) }}
 {% endblock %}
 

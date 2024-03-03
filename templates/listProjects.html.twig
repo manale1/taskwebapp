@@ -1,57 +1,148 @@
 {% extends 'base.html.twig' %}
-
+ {% block titleTwig %}Projects Lists{% endblock %}
 {% block body %}
     <div class="container">
+        <button class="button " type="submit" id=""><a href="{{ path('app_projectsorganis') }}">Project org</a></button>
+        <button class="button " style="margin-bottom: 20px" type="submit" id=""><a href="{{ path('app_projectsparticip') }}">Project particip</a></button>
         <table class="table">
             <thead>
             <tr>
                 <th scope="col">Name</th>
-                <th scope="col">Date de début</th>
-                <th scope="col">Date de fin</th>
+                <th scope="col">Start date</th>
+                <th scope="col">End date</th>
                 <th scope="col">Organized</th>
                 <th scope="col">State</th>
-                <th scope="col">Infos Project</th>
-                <th scope="col">Nmr max</th>
+                <th scope="col" >Description</th>
+                <th scope="col">Max nbr of Participants</th>
                 <th scope="col">Registration</th>
-                {% if app.user.administrateur %}
                 <th scope="col">Management</th>
-                {% endif %}
             </tr>
             </thead>
+            {% if projectparticip is defined %}
+            <h2>My projects where i am a participant</h2>
+            {% elseif projectsorg is defined %}
+            <h2>My projects where i am the organizer</h2>
+            {% endif %}
             <tbody>
-            {% for project in projects %}
-                <tr>
-                    <td>
-                        {{ project.nom }}
-                    </td>
-                    <td>{{ project.datedebut|date('Y-m-d') }}</td>
-                    <td> {{ project.datefin |date('Y-m-d') }}</td>
-                    <td>{{ project.organisateur.nom~" "~project.organisateur.prenom }}</td>
-                    {% if project.datefin |date('Y-m-d') < "now"|date("Y-m-d") %}
-                    <td>Closed</td>
-                    {% else %}
-                    <td>{{ project.etat.libelle }}</td>
-                    {% endif %}
-                    <td ><textarea style="width:250px" cols="5" rows="10">{{ project.infosProject }}</textarea></td>
-                    <td>{{ project.nbInscription }}</td>
-                    {% if project.etat.id != 1 or project.datefin |date('Y-m-d') < "now"|date("Y-m-d")%}
-                        <td>Closed</td>
-                    {% else %}
-                        <td><a href="{{ path('app_inscription',{id: project.id }) }}">Register</a></td>
-                     {% endif%}
+            {% if projectsorg is defined %}
+                {% for project in projectsorg %}
+                    <tr>
+                        <td>
+                            {{ project.nom }}
+                        </td>
+                        <td>{{ project.datedebut|date('Y-m-d') }}</td>
+                        <td> {{ project.datefin |date('Y-m-d') }}</td>
+                        <td><a href="{{ path('app_profilorg',{'id' : project.organisateur.id}) }}">{{ project.organisateur.nom~" "~project.organisateur.prenom }}</a></td>
+                        {% if project.datefin |date('Y-m-d') < "now"|date("Y-m-d") %}
+                            <td>Closed</td>
+                        {% else %}
+                            <td>{{ project.etat.libelle }}</td>
+                        {% endif %}
+                        <td ><textarea style="width:100px" cols="5" rows="10">{{ project.infosProject }}</textarea></td>
+                        <td style="width:30px">{{ project.nbInscription }}</td>
+                        {% if project.etat.id != 1 or project.datefin |date('Y-m-d') < "now"|date("Y-m-d")%}
+                            <td>Closed</td>
+                        {% else %}
+                            <td><a href="{{ path('app_inscription',{id: project.id }) }}">Register</a></td>
+                        {% endif%}
 
-                        {% if app.user.administrateur %}
+                        {% if app.user.administrateur or project.organisateur.id == app.user.id%}
+                            <td style="width: 70px">
+                                {% if project.etat.id != 1 %}
+                                    <button type="reset" class="button "><a href="{{ path('app_deleteproject',{'id': project.id} )}}" onclick="return confirm('Are you sure you want to delete this project ? ')">Delete</a></button>
+                                {% else %}
+                                    <button type="submit"  class="button "><a href="{{ path('app_updateproject',{'id': project.id} )}}">Update</a></button>
+                                    <button type="reset" class="button "><a href="{{ path('app_deleteproject',{'id': project.id} )}}" onclick="return confirm('Are you sure you want to delete this project ? ')">Delete</a></button>
+                                {% endif %}
+                            </td>
+                        {% else  %}
+                            <td>
+                                ---------
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% elseif projects is defined  %}
+                <h2>My projects where i am a participant</h2>
+                    {% for project in projects %}
+                        <tr>
+                            <td>
+                                {{ project.nom }}
+                            </td>
+                            <td>{{ project.datedebut|date('Y-m-d') }}</td>
+                            <td> {{ project.datefin |date('Y-m-d') }}</td>
+                            <td><a href="{{ path('app_profilorg',{'id' : project.organisateur.id}) }}">{{ project.organisateur.nom~" "~project.organisateur.prenom }}</a></td>
+                            {% if project.datefin |date('Y-m-d') < "now"|date("Y-m-d") %}
+                                <td>Closed</td>
+                            {% else %}
+                                <td>{{ project.etat.libelle }}</td>
+                            {% endif %}
+                            <td ><textarea style="width:100px" cols="5" rows="10">{{ project.infosProject }}</textarea></td>
+                            <td style="width: 30px">{{ project.nbInscription }}</td>
+                            {% if project.etat.id != 1 or project.datefin |date('Y-m-d') < "now"|date("Y-m-d")%}
+                                <td>Closed</td>
+                            {% else %}
+                                <td><a href="{{ path('app_inscription',{id: project.id }) }}">Register</a></td>
+                            {% endif%}
+
+                            {% if app.user.administrateur or project.organisateur.id == app.user.id %}
+                                <td style="width: 70px">
+                                    {% if project.etat.id != 1 %}
+                                        <button type="reset" class="button "><a href="{{ path('app_deleteproject',{'id': project.id} )}}" onclick="return confirm('Are you sure you want to delete this project ? ')">Delete</a></button>
+                                    {% else %}
+                                        <button type="submit"  class="button "><a href="{{ path('app_updateproject',{'id': project.id} )}}">Update</a></button>
+                                        <button type="reset" class="button "><a href="{{ path('app_deleteproject',{'id': project.id} )}}" onclick="return confirm('Are you sure you want to delete this project ? ')">Delete</a></button>
+                                    {% endif %}
+                                </td>
+                            {% else  %}
+                                <td>
+                                    ---------
+                                </td>
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+            {% else  %}
+            {% if projectparticip is defined %}
+            {% for project in projectparticip %}
+            <tr>
+                <td>
+                    {{ project.nom }}
+                </td>
+                <td>{{ project.datedebut|date('Y-m-d') }}</td>
+                <td> {{ project.datefin |date('Y-m-d') }}</td>
+                <td><a href="{{ path('app_profilorg',{'id' : project.organisateur.id}) }}">{{ project.organisateur.nom~" "~project.organisateur.prenom }}</a></td>
+                {% if project.datefin |date('Y-m-d') < "now"|date("Y-m-d") %}
+                    <td>Closed</td>
+                {% else %}
+                    <td>{{ project.etat.libelle }}</td>
+                {% endif %}
+                <td > <textarea style="width:100px" cols="5" rows="10">{{ project.infosProject }}</textarea></td>
+                <td style="width:30px">{{ project.nbInscription }}</td>
+                {% if project.etat.id != 1 or project.datefin |date('Y-m-d') < "now"|date("Y-m-d")%}
+                    <td>Closed</td>
+                {% else %}
+                    <td><a href="{{ path('app_inscription',{id: project.id }) }}">Register</a></td>
+                {% endif%}
+
+                {% if app.user.administrateur or project.organisateur.id == app.user.id %}
                     <td style="width: 70px">
                         {% if project.etat.id != 1 %}
-                            <button type="reset" class="btn "><a href="{{ path('app_deleteproject',{'id': project.id} )}}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')">Supprimer</a></button>
-                       {% else %}
-                           <button type="submit"  class="btn "><a href="{{ path('app_updateproject',{'id': project.id} )}}">Modifier</a></button>
-                           <button type="reset" class="btn "><a href="{{ path('app_deleteproject',{'id': project.id} )}}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')">Supprimer</a></button>
+                            <button type="reset" class="button "><a href="{{ path('app_deleteproject',{'id': project.id} )}}" onclick="return confirm('Are you sure you want to delete this project ? ')">Delete</a></button>
+                        {% else %}
+                            <button type="submit"  class="button "><a href="{{ path('app_updateproject',{'id': project.id} )}}">Update</a></button>
+                            <button type="reset" class="button "><a href="{{ path('app_deleteproject',{'id': project.id} )}}" onclick="return confirm('Are you sure you want to delete this project ? ')">Delete</a></button>
                         {% endif %}
                     </td>
-                        {% endif %}
-                </tr>
+                    {% else  %}
+                    <td>
+                        ---------
+                    </td>
+                {% endif %}
+            </tr>
             {% endfor %}
+            {% endif %}
+            {% endif %}
+
             </tbody>
         </table>
     </div>

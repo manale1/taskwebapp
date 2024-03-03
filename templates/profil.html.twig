@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
-
+{% block titleTwig %} Profile{% endblock %}
 {% block body %}
     <div class="profileDiv" >
         <div class="container">
             <div class="row g-2">
                 <div class="col-6">
-                    <p>Prénom :</p>
+                    <p>First name :</p>
                 </div>
                 <div class="col-6">
                     <p>{{ app.user.prenom}}</p>
                 </div>
                 <div class="col-6">
-                    <p>Nom :</p>
+                    <p>Name :</p>
                 </div>
                 <div class="col-6">
                     <p>{{ app.user.nom }}</p>
@@ -21,26 +21,26 @@
         <div class="container">
             <div class="row g-2">
                 <div class="col-6">
-                    <p>Téléphone :</p>
+                    <p>Number phone :</p>
                 </div>
                 <div class="col-6">
                     <p>{{ app.user.telephone }}</p>
                 </div>
                 <div class="col-6">
-                    <p>Date de naiss</p>
+                    <p>Date of birth</p>
                 </div>
                 <div class="col-6">
                     <p>{{ app.user.dateNaiss |date('Y/m/d') }}</p>
                 </div>
                 <div class="col-6">
-                    <p>Mail :</p>
+                    <p>Email :</p>
                 </div>
                 <div class="col-6">
                     <p>{{ app.user.email }}</p>
                 </div>
                 <div class="row g-2">
                     <div class="col-6">
-                        <p>Adresse</p>
+                        <p>Address</p>
                     </div>
                     <div class="col-6">
                         <p>{{ app.user.adresse }}</p>
@@ -48,7 +48,7 @@
                 </div>
                 <div class="row g-2">
                     <div class="col-6">
-                        <p>Poste</p>
+                        <p>Job</p>
                     </div>
                     <div class="col-6">
                         <p>{{ app.user.poste }}</p>
@@ -56,9 +56,9 @@
                 </div>
             </div>
             {% if app.user.administrateur %}
-            <button type="submit" style="margin-top: 15px" class="btn btn-primary btn-lg" ><a class="btn btn-primary " href="{{ path('app_updateuser',{'id' : app.user.id}) }}">Modifier</a></button>
+            <button type="submit" style="margin-top: 15px" class="button" ><a  href="{{ path('app_updateuser',{'id' : app.user.id}) }}">Update</a></button>
             {% endif %}
-            <button type="reset" style="margin-top: 15px" class="btn btn-primary btn-lg" ><a class="btn btn-primary " href="{{ path('app_m') }}">Retour</a></button>
+            <button type="reset" style="margin-top: 15px" class="button" ><a  href="{{ path('app_m') }}">Cancel</a></button>
     </div>
 {% endblock %}
 

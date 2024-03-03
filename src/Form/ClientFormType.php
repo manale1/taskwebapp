@@ -16,19 +16,24 @@ class ClientFormType extends AbstractType
     {
         $builder
             ->add('nom',TextType::class,[
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Name'
             ])
             ->add('prenom',TextType::class,[
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'label' => 'First name'
             ])
             ->add('telephone',TelType::class,[
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Number phone'
             ])
             ->add('email',EmailType::class,[
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Email'
             ])
             ->add('adresse',TextType::class,[
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Address'
             ])
         ;
     }

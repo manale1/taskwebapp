@@ -1,0 +1,104 @@
+
+<!--------------- menu horizontal ------------------------->
+<nav class="navbar" style="background-color: lavender;">
+    <img src="{{ asset('images/SSSlogo.png') }}" alt="logo"  id="logo">
+    <div  class="navbar-menu" id="navbarH" >
+
+        <div class="navbar-start">
+            <a class="navbar-item" style="margin-bottom: 60px;font-size:18px;" href="{{ path('app_m') }}">
+                Home
+            </a>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a  style="font-size:17px ; margin-left:30px;" class="navbar-link" aria-current="page" > Tools Managements</a>
+                <div class="navbar-dropdown is-boxed"  >
+                    <a class="navbar-item" href="{{ path('app_addoutil') }}">
+                       Add Tool
+                    </a>
+                    <a class="navbar-item"  href="{{ path('app_listoutils') }}">
+                        Tools Lists
+                    </a>
+                </div>
+            </div>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <a  style="font-size:17px ; margin-left:30px;" class="navbar-link" aria-current="page" >Projects Managements</a>
+                <div class="navbar-dropdown is-boxed">
+                    <a class="navbar-item" href="{{ path('app_addproject') }}">
+                        Add Project
+                    </a>
+                    <a class="navbar-item" href="{{ path('app_listprojects') }}">
+                        Projects Lists
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item has-dropdown is-hoverable">
+                <figure class="image is-20*20" style="margin-top:10px;margin-left:30px" >
+                    <img  class="is-rounded" src="{{ asset('images/OIP.jpeg') }}" alt="profile picture">
+                </figure>
+                <a  style="font-size:17px ; margin-left:30px;" class="navbar-link" aria-current="page" >{{ app.user.nom }} {{ app.user.prenom }}</a>
+                <div class="navbar-dropdown is-boxed">
+                    <a class="navbar-item" href="{{ path('app_profil') }}">
+                        Profile
+                    </a>
+                    <a class="navbar-item" href="{{ path('app_logout') }}">
+                        Sign out
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+<script>
+    let a;
+    function afficher(id)
+    {
+        if(a===1)
+        {
+            document.getElementById(id).style.display = "none";
+            return a=0;
+        }
+        else
+        {
+            document.getElementById(id).style.display = "block";
+            return a=1;
+        }
+    }
+</script>
+<!-------------------------- menu vertical -------------------------->
+<div class="columns">
+    <div class="column ">
+<aside class="menu" style="width: 250px;background-color: lavender;height: 900px" id="menuV">
+    <p class="menu-label">
+        <a  onclick="afficher('ulgeneral')" href="{{ path('app_m') }}">
+            General
+        </a>
+    </p>
+    <p class="menu-label">
+        <a onclick="afficher('listTasks')">Tasks Managements</a>
+    </p>
+    <ul class="menu-list" id="listTasks">
+        <li><a href="{{ path('app_listtasks') }}">Tasks lists</a></li>
+        <li><a href="{{ path('app_taskrealized') }}">Tasks In progress</a></li>
+        <li><a href="{{ path('app_tasktoberealized') }}">Tasks To Be Realized</a></li>
+        <li><a href="{{ path('app_taskclosed') }}">Tasks Realized</a></li>
+    </ul>
+   {% if app.user.administrateur %}
+       <p class="menu-label">
+           <a onclick="afficher('listemply')"> Employees Managements</a>
+       </p>
+       <ul class="menu-list" id="listemply">
+           <li><a href="{{ path('app_register') }}">Add Employee</a></li>
+           <li><a href="{{ path('app_listusers') }}">Employees Lists</a></li>
+       </ul>
+       <p class="menu-label">
+           <a onclick="afficher('listclient')"> Clients Managements</a>
+       </p>
+       <ul class="menu-list" id="listclient">
+           <li><a href="{{ path('app_addclient') }}">Add Client</a></li>
+           <li><a href="{{ path('app_listclients') }}">Clients Lists</a></li>
+       </ul>
+    {% endif %}
+</aside>
+    </div>

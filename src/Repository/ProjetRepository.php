@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Employe;
 use App\Entity\Projet;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -38,6 +39,35 @@ class ProjetRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    /**
+     * @return Projet[]
+     */
+    public function mesProjetsOrgnis(Employe $organisateur)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.organisateur =:organis')
+            ->setParameter('organis',$organisateur)
+            ->getQuery()
+            ->getResult();
+    }
+    /**
+     * @return Projet[]
+     */
+    public function mesProjetsParticip(Employe $participant)
+    {
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.employee', 'e')
+            ->andWhere('e = :participant')
+            ->setParameter('participant', $participant)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
+
+
 
 //    /**
 //     * @return Projet[] Returns an array of Projet objects

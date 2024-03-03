@@ -16,12 +16,14 @@ class UpdateTaskType extends AbstractType
     {
         $builder
             ->add('designation',TextType::class,[
-                'attr' => ['class' => 'form-control']
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Designation'
             ])
             ->add('id_client',EntityType::class,
                 [
                     'attr' => ['class' => 'form-control'],
                     'class' => 'App\Entity\Client',
+                    'label' => 'Name of client',
                     'choice_label' => function($client)
                     {
                         return $client->getNom().' '. $client->getPrenom();
@@ -31,6 +33,7 @@ class UpdateTaskType extends AbstractType
             [
                 'attr' => ['class' => 'form-control'],
                 'class' => 'App\Entity\Outil',
+                'label' => 'Name of tool',
                 'choice_label' => function($outil)
                 {
                     return $outil->getNom();
@@ -39,6 +42,7 @@ class UpdateTaskType extends AbstractType
             ->add('id_employe',EntityType::class,[
                 'attr' => ['class' => 'form-control'],
                 'class' => 'App\Entity\Employe',
+                'label' => 'Name of employee',
                 'choice_label' => function($employe)
                 {
                     return $employe->getNom().' '. $employe->getPrenom();
@@ -48,6 +52,7 @@ class UpdateTaskType extends AbstractType
                 [
                     'attr' => ['class' => 'form-control'],
                     'class' => 'App\Entity\Statut',
+                    'label' => 'State',
                     'choice_label' => function($statut)
                     {
                         return $statut->getLibelle();

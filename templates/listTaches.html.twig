@@ -2,13 +2,41 @@
 
 {% block titleTwig %}Task lists{% endblock %}
 {% block body %}
-    <div class="container mt-5">
-        <table class="table">
+    <div class="container " >
+        <form action="" method="post" class="d-flex align-items-center" id="searchForm">
+            <div class="input-group">
+                <label for="start_date" class="input-group-text">De :</label>
+                <input type="date" class="form-control" id="start_date" name="dated">
+            </div>
+            <div class="input-group mx-2">
+                <label for="end_date" class="input-group-text">À :</label>
+                <input type="date" class="form-control" id="end_date" name="datef">
+            </div>
+            <button class="button" type="button" id="searchByDate">Rechercher</button>
+            <div class="input-group">
+                <input type="search" class="form-control" name="designation" placeholder="Recherche">
+                <button class="button" type="button" id="searchByDesignation">Rechercher par désignation</button>
+            </div>
+        </form>
+
+        <script>
+            document.getElementById('searchByDate').addEventListener('click', function() {
+                document.getElementById('searchForm').action = "{{ path('app_findbydate') }}";
+                document.getElementById('searchForm').submit();
+            });
+            document.getElementById('searchByDesignation').addEventListener('click', function() {
+                document.getElementById('searchForm').action = "{{ path('app_finbydesignation') }}";
+                document.getElementById('searchForm').submit();
+            });
+        </script>
+
+
+        <table class="table" style="margin-top: 50px">
             <thead>
             <tr>
                 <th scope="col">Designation</th>
-                <th scope="col">Date de début</th>
-                <th scope="col">Date de fin</th>
+                <th scope="col">First date</th>
+                <th scope="col">End date</th>
                 <th scope="col">Name employee</th>
                 <th scope="col">Name client</th>
                 <th scope="col">Name outil</th>
@@ -17,37 +45,105 @@
             </tr>
             </thead>
             <tbody>
-            {% for tache in listtaches %}
-                <tr>
-                    <td>
-                        {{ tache.designation }}
-                    </td>
-                    <td>{{ tache.dateDebut|date('Y-m-d') }}</td>
-                    {% if tache.idStatut.id == 3 or tache.idStatut.id == 4 %}
-                    <td> {{ tache.dateFin |date('Y-m-d') }}</td>
-                    {% else %}
-                        <td> Task not be realized </td>
-                    {% endif %}
-                    <td>{{ tache.idEmploye.nom~" "~tache.idEmploye.prenom }}</td>
-                    <td>{{ tache.idClient.nom~" "~tache.idClient.prenom }}</td>
-                    <td>{{ tache.idOutil.nom }}</td>
-                    <td>{{ tache.idStatut.libelle }}</td>
-                    <td>
-                        {% if tache.idStatut.id == 4 %}
-                            <button type="reset" class="btn"><a href="{{ path('app_deletetache',{'id': tache.id} )}}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')">Supprimer</a></button>
+            {% if taches is defined%}
+                {% for tache in taches %}
+                    <tr>
+                        <td>
+                            {{ tache.designation }}
+                        </td>
+                        <td>{{ tache.dateDebut|date('Y-m-d') }}</td>
+                        {% if tache.idStatut.id == 3 or tache.idStatut.id == 4 %}
+                            <td> {{ tache.dateFin |date('Y-m-d') }}</td>
                         {% else %}
-                        <button type="submit"  class="btn "><a href="{{ path('app_updatetache',{'id': tache.id} )}}">Modifier</a></button>
-                        <button type="reset" class="btn "><a href="{{ path('app_deletetache',{'id': tache.id} )}}" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cet élément ?')">Supprimer</a></button>
+                            <td> Task not be realized </td>
                         {% endif %}
-                    </td>
-                </tr>
-            {% endfor %}
+                        <td><a href="{{ path('app_profilorg',{'id' : tache.idEmploye.id}) }}">{{ tache.idEmploye.nom~" "~tache.idEmploye.prenom }}</a></td>
+                        <td>{{ tache.idClient.nom~" "~tache.idClient.prenom }}</td>
+                        <td>{{ tache.idOutil.nom }}</td>
+                        <td>{{ tache.idStatut.libelle }}</td>
+                        {% if app.user.administrateur %}
+                            <td style="width: 30px">
+                                {% if tache.idStatut.id == 4 or tache.idStatut.id == 3 %}
+                                    <button type="submit" class="button"  ><a href="{{ path('app_convertjson',{'id' : tache.id}) }}">Convert to JSON</a></button>
+                                    <button type="reset" class="button"><a href="{{ path('app_deletetache',{'id': tache.id} )}}" onclick="return confirm('Are you sure you want to delete this task ? ')">Delete</a></button>
+                                {% else %}
+                                    <button type="submit"  class="button "><a href="{{ path('app_updatetache',{'id': tache.id} )}}">Update</a></button>
+                                    <button type="reset" class="button "><a href="{{ path('app_deletetache',{'id': tache.id} )}}" onclick="return confirm('Are you sure you want to delete this task ? ')">Delete</a></button>
+                                {% endif %}
+                            </td>
+                        {% else %}
+                            {% if app.user.id == tache.idEmploye.id %}
+                                <td style="width: 30px">
+                                    {% if tache.idStatut.id == 4 or tache.idStatut.id == 3 %}
+                                        <button type="reset" class="button"><a href="{{ path('app_deletetache',{'id': tache.id} )}}" onclick="return confirm('Are you sure you want to delete this task ? ')">Delete</a></button>
+                                    {% else %}
+                                        <button type="submit"  class="button "><a href="{{ path('app_updatetache',{'id': tache.id} )}}">Update</a></button>
+                                        <button type="reset" class="button "><a href="{{ path('app_deletetache',{'id': tache.id} )}}" onclick="return confirm('Are you sure you want to delete this task ? ')">Delete</a></button>
+                                    {% endif %}
+                                </td>
+                            {% else %}
+                                <td>
+                                    For admin
+                                </td>
+                            {% endif %}
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                {% else %}
+                    {% if listtaches is defined %}
+                    {% for tache in listtaches %}
+                        <tr>
+                            <td>
+                                {{ tache.designation }}
+                            </td>
+                            <td>{{ tache.dateDebut|date('Y-m-d') }}</td>
+                            {% if tache.idStatut.id == 3 or tache.idStatut.id == 4 %}
+                                <td> {{ tache.dateFin |date('Y-m-d') }}</td>
+                            {% else %}
+                                <td> Task not be realized </td>
+                            {% endif %}
+                            <td><a href="{{ path('app_profilorg',{'id' : tache.idEmploye.id}) }}">{{ tache.idEmploye.nom~" "~tache.idEmploye.prenom }}</a></td>
+                            <td>{{ tache.idClient.nom~" "~tache.idClient.prenom }}</td>
+                            <td>{{ tache.idOutil.nom }}</td>
+                            <td>{{ tache.idStatut.libelle }}</td>
+                            {% if app.user.administrateur %}
+                            <td style="width: 50px">
+                                {% if tache.idStatut.id == 4  or tache.idStatut.id == 3%}
+                                    <button type="submit" class="button "  ><a  href="{{ path('app_convertjson',{'id' : tache.id}) }}">Convert to JSON</a></button>
+                                    <button type="reset" class="button"><a href="{{ path('app_deletetache',{'id': tache.id} )}}" onclick="return confirm('Are you sure you want to delete this task ?')">Delete</a></button>
+                                {% else %}
+                                    <button type="submit"  class="button "><a href="{{ path('app_updatetache',{'id': tache.id} )}}">Update</a></button>
+                                    <button type="reset" class="button "><a href="{{ path('app_deletetache',{'id': tache.id} )}}" onclick="return confirm('Are you sure you want to delete this task ?')">Delete</a></button>
+                                {% endif %}
+                            </td>
+                                {% else %}
+                                    {% if app.user.id == tache.idEmploye.id %}
+                                        <td style="width:50px">
+                                            {% if tache.idStatut.id == 4 or tache.idStatut.id == 3%}
+                                                <button type="reset" class="button"><a href="{{ path('app_deletetache',{'id': tache.id} )}}" onclick="return confirm('Are you sure you want to delete this task ?')">Delete</a></button>
+                                            {% else %}
+                                                <button type="submit"  class="button "><a href="{{ path('app_updatetache',{'id': tache.id} )}}">Update</a></button>
+                                                <button type="reset" class="button "><a href="{{ path('app_deletetache',{'id': tache.id} )}}" onclick="return confirm('Are you sure you want to delete this task?')">Supprimer</a></button>
+                                            {% endif %}
+                                        </td>
+                                        {% else %}
+                                        <td>
+                                            For admin
+                                        </td>
+                                        {% endif %}
+                            {% endif %}
+                        </tr>
+                    {% endfor %}
+                        {% endif %}
+            {% endif %}
+
             </tbody>
         </table>
+
     </div>
 {% endblock %}
 
 {% block title %}
-
+tasks lists
 {% endblock %}
 

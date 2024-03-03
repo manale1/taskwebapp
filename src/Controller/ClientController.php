@@ -23,9 +23,10 @@ class ClientController extends AbstractController
         $formClient->handleRequest($request);
         if($formClient->isSubmitted() && $formClient->isValid())
         {
+            $this->addFlash('success', 'This client is successfully added');
             $entityManager->persist($client);
             $entityManager->flush();
-            $this->redirectToRoute('app_m');
+            return $this->redirectToRoute('app_listclients');
         }
         return $this->render('addclient.html.twig',[
             'formclient' => $formClient->createView()
@@ -42,6 +43,7 @@ class ClientController extends AbstractController
         $formClient->handleRequest($request);
         if($formClient->isSubmitted() && $formClient->isValid())
         {
+            $this->addFlash('success', 'This client is successfully updated');
             $entityManager->persist($client);
             $entityManager->flush();
             return $this->redirectToRoute('app_m');
@@ -68,12 +70,24 @@ class ClientController extends AbstractController
         $client = $clientRepository->find($id);
         if($client)
         {
+            $this->addFlash('success', 'This client is successfully deleted');
             $clientRepository->remove($client,true);
         }
         else
         {
-            $message = "erreur";
+            $this->addFlash('danger', 'Error');
         }
         return $this->redirectToRoute('app_listclients');
+    }
+    /**
+     * @Route ("/finbyemailc",name ="app_finbyemailc")
+     */
+    public function finByEmail(Request $request,ClientRepository $clientRepository) :Response
+    {
+        $email = $request->request->get('email');
+
+        $client = $clientRepository->findByEmail($email);
+
+        return $this->render('listClients.html.twig',['client' => $client]);
     }
 }

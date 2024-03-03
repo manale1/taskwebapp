@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class=" column  divTextArea is-9-tablet is-10-desktop is-10-mobile">
+        <div class="field-body">
+            <div class="field">
+                <textarea  id="json_data" >{{ paramjson }}</textarea>
+            </div>
+        </div>
+        <div >
+            <button class="button mt-5" onclick="JsonDownload();">Download json file</button>
+        </div>
+    </div>
+    <script>
+        function JsonDownload(){
+            let Json = document.getElementById("json_data").value;
+            let data_str = "data:text/json;charset=utf-8," + encodeURIComponent(Json);
+            let link = document.createElement('a');
+            link.setAttribute('href', data_str)
+            link.setAttribute('download', "JsonFile.json");
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
+        }
+    </script>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

@@ -22,7 +22,7 @@ class RedirectToLogin
     {
         $request = $event->getRequest();
 
-        // Vérifier si l'utilisateur n'est pas connecté et si la route actuelle n'est pas déjà la page de connexion
+        // Vérifier si l'utilisateur n'est pas connecté et si la route actuelle n'est pas déjà la page de connexion ou la page de la modification de mot de passe
         if (!$this->security->isGranted('IS_AUTHENTICATED_FULLY') && $request->attributes->get('_route') !== 'app_login' && $request->attributes->get('_route') !== 'app_forgot_password_request'
             && $request->attributes->get('_route') !== 'app_check_email' && $request->attributes->get('_route') !== 'app_reset_password') {
 

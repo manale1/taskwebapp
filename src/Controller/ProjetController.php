@@ -31,7 +31,7 @@ class ProjetController extends AbstractController
         {
             if($projet->getDatefin() < new \DateTime())
             {
-                $this->addFlash('error', 'la date de fin est déja passé');
+                $this->addFlash('danger', 'la date de fin est déja passé');
                 return $this->redirectToRoute('app_addproject');
             }
             $entityManager->persist($projet);
@@ -76,6 +76,7 @@ class ProjetController extends AbstractController
              $this->addFlash('danger', 'la date de fin est déja passé');
              return $this->redirectToRoute('app_listprojects');
          }
+        $this->addFlash('success', 'You are well registered in this project');
          $project->addEmployee($participant);
          $entityManager->persist($project);
          $entityManager->flush();
@@ -99,6 +100,7 @@ class ProjetController extends AbstractController
                 $this->addFlash('danger', 'la date de fin est déja passé');
                 return $this->redirectToRoute('app_addproject');
             }
+            $this->addFlash('success', 'This project is successfully updated');
             $entityManager->persist($project);
             $entityManager->flush();
             return $this->redirectToRoute('app_listprojects');
@@ -118,4 +120,31 @@ class ProjetController extends AbstractController
         return $this->redirectToRoute('app_listprojects');
 
     }
+    /**
+     * @Route ("/projectsorganis",name="app_projectsorganis")
+     */
+    public function ProjectsOrganis(ProjetRepository $projetRepository):Response
+    {
+        /**
+         * @var Employe $organisateur;
+         */
+        $organisateur = $this->getUser();
+        $projects = $projetRepository->mesProjetsOrgnis($organisateur);
+        return $this->render('listProjects.html.twig',
+            ['projectsorg' => $projects]);
+    }
+    /**
+     * @Route ("/projectsparticip",name="app_projectsparticip")
+     */
+    public function ProjectsParticip(ProjetRepository $projetRepository):Response
+    {
+        /**
+         * @var Employe $organisateur;
+         */
+        $organisateur = $this->getUser();
+        $projects = $projetRepository->mesProjetsParticip($organisateur);
+        return $this->render('listProjects.html.twig',
+            ['projectparticip' => $projects]);
+    }
+
 }

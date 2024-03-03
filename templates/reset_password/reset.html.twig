@@ -1,0 +1,12 @@
+{% extends 'cnx.html.twig' %}
+
+
+{% block body %}
+    <div class="container" style="margin-top: 200px;margin-left: 500px">
+        <h1 style="margin-bottom: 10px" >Reset your password</h1>
+        {{ form_start(resetForm) }}
+        {{ form_row(resetForm.plainPassword) }}
+        <button class="button" >Reset password</button>
+        {{ form_end(resetForm) }}
+    </div>
+{% endblock %}
